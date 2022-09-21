@@ -1,3 +1,5 @@
+// somar(2)(3)(3)
+
 function somar(n1) {
     return function (n2) {
         return function (n3) {
@@ -9,6 +11,8 @@ function somar(n1) {
 const resultado = somar(2)(3)(3)
 console.log(resultado)
 
+
+// calcular(3)(7)(fn)
 function calcular(n1) {
     return function (n2) {
         return function (fn) {
