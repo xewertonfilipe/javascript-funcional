@@ -33,3 +33,26 @@ console.log(listaProdutos)
 
 const totalProdutos = carrinho.map(total)
 console.log(totalProdutos)
+
+Array.prototype.meuMap = function (fn) {
+    const novoArray = []
+    for (let i = 0; i < this.length; i++) {
+        novoArray.push(fn(this[i], i, this))
+    }
+    return novoArray
+}
+
+// const lista = item => item.nome
+// const total = item => {
+//     if (item.qtde === 0) {
+//         return item.preco
+//     }
+
+//     return item.qtde * item.preco
+// }
+
+// const listaProdutos = carrinho.meuMap(lista)
+// console.log(listaProdutos)
+
+// const totalProdutos = carrinho.meuMap(total)
+// console.log(totalProdutos)
