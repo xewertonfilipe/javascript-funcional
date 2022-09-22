@@ -14,3 +14,22 @@ const carrinho = [
     { nome: 'Lapis', qtde: 3, preco: 5.82 },
     { nome: 'Tesoura', qtde: 1, preco: 19.20 },
 ]
+
+// Criar duas funções:
+// A primeira, onde gera uma lista de nomes dos produtos
+// A segunda, onde gera o valor total considerando a quantidade de itens
+
+const lista = item => item.nome
+const total = item => {
+    if (item.qtde === 0) {
+        return item.preco
+    }
+
+    return item.qtde * item.preco
+}
+
+const listaProdutos = carrinho.map(lista)
+console.log(listaProdutos)
+
+const totalProdutos = carrinho.map(total)
+console.log(totalProdutos)
