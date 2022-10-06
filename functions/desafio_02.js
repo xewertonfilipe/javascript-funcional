@@ -11,7 +11,6 @@ const getTotal = item => item.qtde * item.preco
 const getMedia = (acc, el) => {
     const novaQtde = acc.qtde + 1
     const novoTotal = acc.total + el
-    console.log(acc, el)
     return {
         qtde: novaQtde,
         total: novoTotal,
@@ -31,3 +30,22 @@ const total = carrinho
 
 console.log(total)
 
+
+Array.prototype.meuReduce = function (fn, inicial) {
+    let acc = inicial
+    for (let i = 0; i < this.length; i++) {
+        if (!acc && i === 0) {
+            acc = this[i]
+            continue
+        }
+        acc = fn(acc, this[i], i, this)
+    }
+    return acc
+}
+
+const total2 = carrinho
+    .filter(getFragil)
+    .map(getTotal)
+    .meuReduce(getMedia, media)
+
+console.log(total2)
