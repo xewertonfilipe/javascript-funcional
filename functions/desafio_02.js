@@ -6,12 +6,6 @@ const carrinho = [
     { nome: 'Tesoura', qtde: 1, preco: 19.20, fragil: true },
 ]
 
-// filter, map, reduce
-
-// 1. fragil: true
-// 2. qtde * preco
-// 3. media totais
-
 const getFragil = item => item.fragil
 const getTotal = item => item.qtde * item.preco
 const getMedia = (acc, el) => {
@@ -24,6 +18,9 @@ const getMedia = (acc, el) => {
         media: novoTotal / novaQtde
     }
 }
+
+console.log("Fráfil:", carrinho.filter(getFragil))
+console.log("Total:", carrinho.filter(getFragil).map(getTotal))
 
 const media = { qtde: 0, total: 0, media: 0 };
 
