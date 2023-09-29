@@ -2,9 +2,9 @@ const fs = require('fs')
 const path = require('path')
 
 function searchFiles(relativeDirectory) {
-    const fileNames = []
     return new Promise((resolve, reject) => {
         try {
+            const fileNames = []
             const fileList = fs.readdirSync(path.join(__dirname, relativeDirectory))
             fileList.forEach(file => {
                 if (file.includes('.srt')) {
