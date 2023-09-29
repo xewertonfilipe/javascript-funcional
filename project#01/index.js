@@ -6,5 +6,3 @@ fn.searchFiles('/dada/subtitles/')
     .then(fn.orderWords)
     .then(fn.createOutputFile)
     .catch(console.log)
-
-
