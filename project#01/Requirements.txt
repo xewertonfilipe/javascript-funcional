@@ -1,0 +1,63 @@
+EN:
+
+1° List each word and the number of times it contains in the subtitle files;
+3rd Ordered from highest to lowest;
+4° Remove what doesn’t matter:
+     like lines with numbers,
+     interval,
+     symbols,
+     blank lines,
+     double asps.
+5° Return an object or object array.
+6° Use Promise, use several then to remove white spaces, symbols, etc...
+
+Result:
+
+Examples
+
+json
+
+{
+     "I've": 3456,
+     "email": 2459,
+     "gotten": 1690,
+
+}
+
+[
+     {"word": "i", qty: 3456},
+     {"word": "you", qty: 2000},
+     {"word": "what", qty: 120},
+]
+
+PT-BR:
+
+1° Listar cada palavra e a quantidade de vezes que contém nos arquivos de legendas;
+3° Ordenada de maior para menor;
+4° Remover o que não interessa: 
+    como linhas com números,
+    intervalo,
+    símbolos,
+    linhas em branco, 
+    asplas duplas.
+5° Retornar um objeto ou array de objeto.
+6° Utilizar Promise, utilizar vários then para remover espaços em branco, símbolos e etc...
+
+Resultado:
+
+Exemplos
+
+json
+
+{
+    "I've": 3456,
+    "email": 2459,
+    "gotten": 1690,
+
+}
+
+[
+    {"palavra": "i", qtde: 3456},
+    {"palavra": "you", qtde: 2000},
+    {"palavra": "what", qtde: 120},
+]
