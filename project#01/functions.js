@@ -30,12 +30,12 @@ async function readFiles({ fileNames, relativeDirectory }) {
     let subtitle
     for (const names of fileNames) {
         const fullPath = path.join(__dirname, relativeDirectory + names)
-        subtitle = subtitle + await cleanReading(fullPath)
+        subtitle = subtitle + await removeCharacters(fullPath)
     }
     return subtitle
 }
 
-function cleanReading(fullPath) {
+function removeCharacters(fullPath) {
     return new Promise((resolve, reject) => {
         try {
             fs.readFile(fullPath, (_, content) => {
@@ -82,7 +82,7 @@ function createOutputFile(info) {
 }
 
 module.exports = {
-    searchFiles, readFiles, cleanReading,
+    searchFiles, readFiles, removeCharacters,
     countsWords, orderWords, createOutputFile
 }
 
