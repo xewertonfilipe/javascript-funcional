@@ -75,6 +75,7 @@ function createOutputFile(info) {
     return new Promise((resolve) => {
         try {
             resolve(fs.writeFile(path.join(__dirname, 'Output.json'), JSON.stringify(info), () => { }))
+            console.log('Output file generated successfully.')
         } catch (error) {
             throw 'An unexpected error occurred while generating the output file'
         }
