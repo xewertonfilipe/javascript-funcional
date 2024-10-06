@@ -1,6 +1,18 @@
 const fs = require('fs')
 const path = require('path')
 
+function composition(...fns) {
+    return function (param) {
+        return fns.reduce(async (acc, fn) => {
+            if (Promise.resolve(acc) === acc) {
+                return fn(await acc)
+            } else {
+                return fn(acc)
+            }
+        }, param)
+    }
+}
+
 function searchFiles(relativeDirectory) {
     return new Promise((resolve, reject) => {
         try {
@@ -83,7 +95,12 @@ function createOutputFile(info) {
 }
 
 module.exports = {
-    searchFiles, readFiles, removeCharacters,
-    countsWords, orderWords, createOutputFile
+    composition,
+    searchFiles,
+    readFiles,
+    removeCharacters,
+    countsWords,
+    orderWords,
+    createOutputFile
 }
 

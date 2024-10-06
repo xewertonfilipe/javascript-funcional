@@ -1,8 +1,12 @@
 const fn = require('./functions')
 
-fn.searchFiles('/dada/subtitles/')
-    .then(fn.readFiles)
-    .then(fn.countsWords)
-    .then(fn.orderWords)
-    .then(fn.createOutputFile)
-    .catch(console.log)
+const mostUsedWords = fn.composition(
+    fn.searchFiles,
+    fn.readFiles,
+    fn.countsWords,
+    fn.orderWords,
+    fn.createOutputFile,
+)
+
+mostUsedWords('/dada/subtitles/')
+    .then(console.log)
