@@ -21,7 +21,6 @@ function lerArquivo() {
             try {
                 const conteudo = fs.readFileSync(caminho, { encoding: 'utf-8' })
                 subscriber.next(conteudo.toString())
-                subscriber.complete()
             } catch (e) {
                 subscriber.error(e)
             }
@@ -60,24 +59,15 @@ function removerElementosSeIniciarComNumero() {
     }))
 }
 
-function removerElementosSeIncluir(padraoTextual) {
-    return function (array) {
-        return array.filter(el => !el.includes(padraoTextual))
-    }
-}
-
 function removerSimbolos(simbolos) {
-    return function (array) {
-        return array.map(el => {
-            return simbolos.reduce((acc, simbolo) => {
+    return createPipeableOperator(subscriber => ({
+        next(texto) {
+            const textoSemSimbolos = simbolos.reduce((acc, simbolo) => {
                 return acc.split(simbolo).join('')
-            }, el)
-        })
-    }
-}
-
-function mesclarElementos(array) {
-    return array.join(' ')
+            }, texto)
+            subscriber.next(textoSemSimbolos)
+        }
+    }))
 }
 
 function separarTextoPor(simbolo) {
@@ -90,21 +80,18 @@ function separarTextoPor(simbolo) {
     }))
 }
 
-function agruparElementos(palavras) {
-    return Object.values(palavras.reduce((acc, palavra) => {
-        const el = palavra.toLowerCase()
-        const qtde = acc[el] ? acc[el].qtde + 1 : 1
-        acc[el] = { elemento: el, qtde }
-        return acc
-    }, {}))
-}
-
-function ordernarPorAtribNumerico(attr, ordem = 'asc') {
-    return function (array) {
-        const asc = (o1, o2) => o1[attr] - o2[attr]
-        const desc = (o1, o2) => o2[attr] - o1[attr]
-        return [...array].sort(ordem === 'asc' ? asc : desc)
-    }
+function agruparElementos() {
+    return createPipeableOperator(subscriber => ({
+        next(palavras) {
+            const agrupado = Object.values(palavras.reduce((acc, palavra) => {
+                const el = palavra.toLowerCase()
+                const qtde = acc[el] ? acc[el].qtde + 1 : 1
+                acc[el] = { elemento: el, qtde }
+                return acc
+            }, {}))
+            subscriber.next(agrupado)
+        }
+    }))
 }
 
 function createPipeableOperator(operatorFn) {
@@ -125,11 +112,8 @@ module.exports = {
     elementosTerminadosCom,
     lerArquivo,
     removerElementosSeVazio,
-    removerElementosSeIncluir,
     removerElementosSeIniciarComNumero,
     removerSimbolos,
-    mesclarElementos,
     separarTextoPor,
-    agruparElementos,
-    ordernarPorAtribNumerico
+    agruparElementos
 }

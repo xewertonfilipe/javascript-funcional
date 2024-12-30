@@ -1,6 +1,6 @@
 const path = require('path')
 const fn = require('./funcoes')
-const { toArray, map } = require('rxjs/operators')
+const { toArray, groupBy, mergeMap, map } = require('rxjs/operators')
 const _ = require('lodash')
 
 const caminho = path.join(__dirname, 'dada', 'subtitles')
@@ -22,8 +22,10 @@ fn.lerDiretorio(caminho)
         fn.separarTextoPor(' '),
         fn.removerElementosSeVazio(),
         fn.removerElementosSeIniciarComNumero(),
+        groupBy(el => el),
+        mergeMap(grupo => grupo.pipe(toArray())),
+        map(palavras => ({ elemento: palavras[0], qtde: palavras.length })),
         toArray(),
-        fn.agruparElementos(),
         map(array => _.sortBy(array, el => -el.qtde))
 
     )
