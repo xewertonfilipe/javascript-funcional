@@ -39,21 +39,31 @@ function elementosTerminadosCom(padraoTextual) {
     }))
 }
 
-function removerElementosSeVazio(array) {
-    return array.filter(el => el.trim())
+function removerElementosSeVazio() {
+    return createPipeableOperator(subscriber => ({
+        next(texto) {
+            if (texto.trim()) {
+                subscriber.next(texto)
+            }
+        }
+    }))
+}
+
+function removerElementosSeIniciarComNumero() {
+    return createPipeableOperator(subscriber => ({
+        next(texto) {
+            const num = parseInt(texto.trim())
+            if (num !== num) {
+                subscriber.next(texto)
+            }
+        }
+    }))
 }
 
 function removerElementosSeIncluir(padraoTextual) {
     return function (array) {
         return array.filter(el => !el.includes(padraoTextual))
     }
-}
-
-function removerElementosSeApenasNumero(array) {
-    return array.filter(el => {
-        const num = parseInt(el.trim())
-        return num !== num
-    })
 }
 
 function removerSimbolos(simbolos) {
@@ -71,9 +81,13 @@ function mesclarElementos(array) {
 }
 
 function separarTextoPor(simbolo) {
-    return function (texto) {
-        return texto.split(simbolo)
-    }
+    return createPipeableOperator(subscriber => ({
+        next(texto) {
+            texto.split(simbolo).forEach(parte => {
+                subscriber.next(parte)
+            })
+        }
+    }))
 }
 
 function agruparElementos(palavras) {
@@ -112,7 +126,7 @@ module.exports = {
     lerArquivo,
     removerElementosSeVazio,
     removerElementosSeIncluir,
-    removerElementosSeApenasNumero,
+    removerElementosSeIniciarComNumero,
     removerSimbolos,
     mesclarElementos,
     separarTextoPor,

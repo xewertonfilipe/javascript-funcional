@@ -12,17 +12,16 @@ const simbolos = [
 fn.lerDiretorio(caminho)
     .pipe(
         fn.elementosTerminadosCom('.srt'),
-        fn.lerArquivo()
+        fn.lerArquivo(),
+        fn.separarTextoPor('\n'),
+        fn.removerElementosSeVazio(),
+        fn.removerElementosSeIniciarComNumero(),
+
     )
     .subscribe(console.log)
 
 // const palavrasMaisUsadas = fn.composicao(
-//     fn.lerDiretorio,
-//     fn.elementosTerminadosCom('.srt'),
-//     fn.lerArquivos,
 //     fn.mesclarElementos,
-//     fn.separarTextoPor('\n'),
-//     fn.removerElementosSeVazio,
 //     fn.removerElementosSeIncluir('-->'),
 //     fn.removerElementosSeApenasNumero,
 //     fn.removerSimbolos(simbolos),
