@@ -15,19 +15,18 @@ function lerDiretorio(caminho) {
     })
 }
 
-function lerArquivo(caminho) {
-    return new Promise((resolve, reject) => {
-        try {
-            const conteudo = fs.readFileSync(caminho, { encoding: 'utf-8' })
-            resolve(conteudo.toString())
-        } catch (e) {
-            reject(e)
+function lerArquivo() {
+    return createPipeableOperator(subscriber => ({
+        next(caminho) {
+            try {
+                const conteudo = fs.readFileSync(caminho, { encoding: 'utf-8' })
+                subscriber.next(conteudo.toString())
+                subscriber.complete()
+            } catch (e) {
+                subscriber.error(e)
+            }
         }
-    })
-}
-
-function lerArquivos(caminhos) {
-    return Promise.all(caminhos.map(caminho => lerArquivo(caminho)))
+    }))
 }
 
 function elementosTerminadosCom(padraoTextual) {
@@ -111,7 +110,6 @@ module.exports = {
     lerDiretorio,
     elementosTerminadosCom,
     lerArquivo,
-    lerArquivos,
     removerElementosSeVazio,
     removerElementosSeIncluir,
     removerElementosSeApenasNumero,
